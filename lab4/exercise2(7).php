@@ -20,3 +20,4 @@ if (preg_match_all($pattern, $str, $matches)) {
 // - aaa
 // - xxx
 ?>
+<!-- Задачи на preg_match[_all] Задачи не всегда можно решить с помощью одной только регулярки. Может понадобится еще что-нибудь дописать на PHP (не всегда, но такое может быть). С помощью preg_match определите, что переданная строка является емэйлом. Примеры емэйлов для тестирования mymail@mail.ru, my.mail@mail.ru, my-mail@mail.ru, my_mail@mail.ru, mail@mail.com, mail@mail.by, mail@yandex.ru. -->
