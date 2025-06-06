@@ -1,23 +1,42 @@
 <?php
-// Исходная строка
-$str = 'aaa bcd xxx efg';
+// ============================== POCKET ==============================
+echo "<h3>Тестовый карман для проверки email-адресов</h3>";
 
-// Регулярное выражение для поиска слов из одинаковых символов
-$pattern = '/\b([a-z])\1+\b/';
+// Массив тестовых email-адресов
+$test_emails = [
+    'mymail@mail.ru',
+    'my.mail@mail.ru',
+    'invalid.email',       
+    '@nodomain.com',       
+];
 
-// Находим все совпадения
-if (preg_match_all($pattern, $str, $matches)) {
-    echo "Найдены слова из повторяющихся букв:\n";
-    foreach ($matches[0] as $match) {
-        echo "- $match\n";
-    }
-} else {
-    echo "Слов из повторяющихся букв не найдено";
+// Регулярное выражение для проверки email
+$email_pattern = '/^[a-zA-Z0-9][a-zA-Z0-9\._-]*[a-zA-Z0-9]@[a-zA-Z0-9][a-zA-Z0-9\.-]*[a-zA-Z0-9]\.[a-zA-Z]{2,}$/';
+
+// Функция для проверки email
+function validateEmail($email) {
+    global $email_pattern;
+    return preg_match($email_pattern, $email) === 1;
 }
 
-// Результат:
-// Найдены слова из повторяющихся букв:
-// - aaa
-// - xxx
+// Проверяем каждый email
+foreach ($test_emails as $email) {
+    $is_valid = validateEmail($email);
+    echo "Email: <b>" . htmlspecialchars($email) . "</b> - ";
+    echo $is_valid ? "<span style='color: green;'>Корректный</span>" : "<span style='color: red;'>Некорректный</span>";
+    echo "<br>";
+}
+
+
+// Функция для проверки одного email
+function checkEmail($email) {
+    global $email_pattern;
+    if (validateEmail($email)) {
+        echo "Email адрес '$email' является корректным";
+    } else {
+        echo "Email адрес '$email' НЕ является корректным";
+    }
+}
+
+
 ?>
-<!-- Задачи на preg_match[_all] Задачи не всегда можно решить с помощью одной только регулярки. Может понадобится еще что-нибудь дописать на PHP (не всегда, но такое может быть). С помощью preg_match определите, что переданная строка является емэйлом. Примеры емэйлов для тестирования mymail@mail.ru, my.mail@mail.ru, my-mail@mail.ru, my_mail@mail.ru, mail@mail.com, mail@mail.by, mail@yandex.ru. -->
