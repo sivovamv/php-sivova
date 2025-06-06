@@ -53,6 +53,7 @@ function viewer($sort, $page) {
                     <th>Адрес</th>
                     <th>Е-mail</th>
                     <th>Комментарий</th>
+                    <th>Действия</th>
                   </tr>';
 
         while ($row = $result->fetch_assoc()) {
@@ -66,6 +67,10 @@ function viewer($sort, $page) {
             $html .= '<td>' . htmlspecialchars($row['address']) . '</td>';
             $html .= '<td>' . htmlspecialchars($row['email']) . '</td>';
             $html .= '<td>' . htmlspecialchars($row['comment']) . '</td>';
+            $html .= '<td>
+                        <a href="?menu=edit&id=' . $row['id'] . '">Редактировать</a> | 
+                        <a href="?menu=delete&id=' . $row['id'] . '" onclick="return confirm(\'Вы уверены, что хотите удалить эту запись?\');">Удалить</a>
+                     </td>';
             $html .= '</tr>';
         }
 
