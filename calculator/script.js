@@ -4,6 +4,10 @@ function appendChar(char) {
     display.value += char;
 }
 
+function appendTrig(func) {
+    display.value += func + '(';
+}
+
 function clearDisplay() {
     display.value = '';
 }

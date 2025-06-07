@@ -1,5 +1,6 @@
 <?php
 // add.php
+require_once 'db_connect.php';
 
 $message = '';
 
@@ -15,24 +16,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'] ?? '';
     $comment = $_POST['comment'] ?? '';
 
+    // Подключение к базе
+    $mysqli = get_db_connection();
+
     // Валидация и добавление в базу
-    $mysqli = new mysqli('localhost', 'root', '', 'contacts_db');
+    $stmt = $mysqli->prepare("INSERT INTO contacts (last_name, first_name, middle_name, gender, date_of_birth, phone, address, email, comment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param('sssssssss', $last_name, $first_name, $middle_name, $gender, $date_of_birth, $phone, $address, $email, $comment);
 
-    if ($mysqli->connect_error) {
-        $message = '<span style="color:red;">Ошибка подключения к базе данных.</span>';
+    if ($stmt->execute()) {
+        $message = '<span style="color:green;">Запись добавлена</span>';
     } else {
-        $stmt = $mysqli->prepare("INSERT INTO contacts (last_name, first_name, middle_name, gender, date_of_birth, phone, address, email, comment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param('sssssssss', $last_name, $first_name, $middle_name, $gender, $date_of_birth, $phone, $address, $email, $comment);
-
-        if ($stmt->execute()) {
-            $message = '<span style="color:green;">Запись добавлена</span>';
-        } else {
-            $message = '<span style="color:red;">Ошибка: запись не добавлена</span>';
-        }
-
-        $stmt->close();
-        $mysqli->close();
+        $message = '<span style="color:red;">Ошибка: запись не добавлена</span>';
     }
+
+    $stmt->close();
+    $mysqli->close();
 }
 
 // Форма для добавления

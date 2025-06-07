@@ -1,14 +1,10 @@
 <?php
 // viewer.php
+require_once 'db_connect.php';
 
 function viewer($sort, $page) {
-    // Подключение к базе данных (пример)
-    $mysqli = new mysqli('localhost', 'root', '', 'contacts_db');
-
-    // Обработка ошибок подключения
-    if ($mysqli->connect_error) {
-        return "Ошибка подключения к базе данных.";
-    }
+    // Подключение к базе данных
+    $mysqli = get_db_connection();
 
     // Определение порядка сортировки
     switch ($sort) {
@@ -76,7 +72,6 @@ function viewer($sort, $page) {
 
         $html .= '</table>';
 
-        // Пагинация
         $total_pages = ceil($total_records / $limit);
         if ($total_pages > 1) {
             $html .= '<div style="margin-top:10px;">';

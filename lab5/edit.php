@@ -1,12 +1,9 @@
 <?php
 // edit.php
+require_once 'db_connect.php';
 
 // Подключение к базе
-$mysqli = new mysqli('localhost', 'root', '', 'contacts_db');
-
-if ($mysqli->connect_error) {
-    die('Ошибка подключения к базе данных.');
-}
+$mysqli = get_db_connection();
 
 $records = [];
 // Получение списка для выбора

@@ -1,11 +1,8 @@
 <?php
 // delete.php
+require_once 'db_connect.php';
 
-$mysqli = new mysqli('localhost', 'root', '', 'contacts_db');
-
-if ($mysqli->connect_error) {
-    die('Ошибка подключения к базе данных.');
-}
+$mysqli = get_db_connection();
 
 $message = '';
 $records = [];
